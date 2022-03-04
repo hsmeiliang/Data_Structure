@@ -31,6 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="array.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="array.h" />
+		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

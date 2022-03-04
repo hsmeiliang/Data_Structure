@@ -1,17 +1,14 @@
 #include <string.h>
 #include <stdio.h>
 
-void run_all_tests()
-{
-    printf("test\n");
-}
+#include"array.h"
 
 
 my_Array *array_new(int capacity)
 {
     int arr_capacity = array_set_capacity(capacity);
 
-    my_Array *arr = malloc(sizeof(my_Array));
+    my_Array *arr = (my_Array *) malloc(sizeof(my_Array));
     check_mem_address(arr);
 
     arr->size = 0;
@@ -75,7 +72,7 @@ void array_set_size(my_Array *arrptr, int re_size)
 
 void array_upsize(my_Array *arrptr)
 {
-    int old_cap = arrptr->cap;
+    int old_cap = arrptr->capacity;
     int new_cap = array_set_capacity(old_cap);
 
     int *new_data = (int *)realloc(arrptr->data, sizeof(int) * new_cap);
@@ -87,8 +84,8 @@ void array_upsize(my_Array *arrptr)
 
 void array_downsize(my_Array *arrptr)
 {
-    int old_cap = arrptr->cap;
-    int new_cap = arrptr->cap / kGrowthFactor;
+    int old_cap = arrptr->capacity;
+    int new_cap = arrptr->capacity / kGrowthFactor;
 
     if(new_cap < kMinCapacity)
     {
@@ -99,10 +96,10 @@ void array_downsize(my_Array *arrptr)
     {
         int *new_data = (int *)realloc(arrptr->data, sizeof(int) * new_cap);
         check_mem_address(new_data);
-    }
 
-    arrptr->data = new_data;
-    arrptr->capacity = new_cap;
+        arrptr->data = new_data;
+        arrptr->capacity = new_cap;
+    }
 }
 
 int array_size(my_Array *arrptr)
@@ -143,7 +140,7 @@ int array_index(my_Array *arrptr, int index)
     {
         exit(EXIT_FAILURE);
     }
-    return *(array->data + index);
+    return *(arrptr->data + index);
 }
 
 void array_insert(my_Array *arrptr, int index, int value)
@@ -218,12 +215,146 @@ int array_find(my_Array *arrptr, int value)
 }
 
 
+void run_all_tests() {
+  test_size_init();
+  test_append();
+  test_empty();
+  test_resize();
+  test_at();
+  test_insert();
+  test_prepend();
+  test_pop();
+  test_remove();
+  test_find_exists();
+  test_find_not_exists();
+}
 
 
+void test_append()
+{
+    my_Array *arrptr = array_new(2);
+    array_append(arrptr, 2);
+    array_append(arrptr, 14);
+    int new_size = array_size(arrptr);
+    assert(new_size == 2);
+    array_clear(arrptr);
+}
+void test_size_init()
+{
+    my_Array *arrptr = array_new(5);
+    int initial_size = array_size(arrptr);
+    assert(initial_size == 0);
+    array_clear(arrptr);
+}
 
-
-
-
-
-
-
+void test_empty()
+{
+    my_Array *arrptr = array_new(2);
+    bool empty = array_is_empty(arrptr);
+    assert(empty == 1);
+    array_append(arrptr, 3);
+    empty = array_is_empty(arrptr);
+    assert(empty == 0);
+    array_clear(arrptr);
+}
+void test_resize()
+{
+    my_Array *arrptr = array_new(2);
+    int old_cap = array_capacity(arrptr);
+    assert(old_cap == 16);
+    for(int i = 0; i<18; i++)
+    {
+        array_append(arrptr, i+1);
+    }
+    //assert(array_capacity(arrptr) == 32);
+    printf("%d\n", array_capacity(arrptr));
+    array_print(arrptr);
+    for(int j = 0; j < 15; j++)
+    {
+        array_pop(arrptr);
+    }
+    assert(array_capacity(arrptr) == 16);
+    array_clear(arrptr);
+}
+void test_at()
+{
+    my_Array *arrptr = array_new(12);
+    for(int i = 0; i < 12; i++)
+    {
+        array_append(arrptr, i+3);
+    }
+    assert(array_index(arrptr, 6) == 9);
+    array_clear(arrptr);
+}
+void test_insert()
+{
+    my_Array *arrptr = array_new(5);
+    for(int i = 0; i < 5; i++)
+        array_append(arrptr, i+5);
+    array_insert(arrptr, 2, 47);
+    assert(array_index(arrptr, 2) == 47);
+    assert(array_index(arrptr, 3) == 7);
+    array_clear(arrptr);
+}
+void test_prepend()
+{
+    my_Array *arrptr = array_new(2);
+    for(int i = 0; i <2; i++)
+    {
+        array_append(arrptr, i + 1);
+    }
+    array_prepend(arrptr, 15);
+    assert(array_index(arrptr, 0) == 15);
+    assert(array_index(arrptr, 1) == 1);
+    array_clear(arrptr);
+}
+void test_pop()
+{
+    my_Array *arrptr = array_new(5);
+    for(int i = 0; i < 2; i++)
+    {
+        array_append(arrptr, i+1);
+    }
+    assert(arrptr->size == 2);
+    for(int j = 0; j < 2; j++)
+    {
+        array_pop(arrptr);
+    }
+    assert(array_is_empty(arrptr) == 1);
+    array_clear(arrptr);
+}
+void test_remove()
+{
+    my_Array *arrptr = array_new(5);
+    array_append(arrptr, 2);
+    array_append(arrptr, 3);
+    array_append(arrptr, 2);
+    array_append(arrptr, 1);
+    array_append(arrptr, 2);
+    array_remove_all(arrptr, 2);
+    assert(array_size(arrptr) == 2);
+    array_clear(arrptr);
+}
+void test_find_exists()
+{
+    my_Array *arrptr = array_new(5);
+    array_append(arrptr, 2);
+    array_append(arrptr, 3);
+    array_append(arrptr, 2);
+    array_append(arrptr, 1);
+    array_append(arrptr, 2);
+    assert(array_find(arrptr, 2) == 0);
+    assert(array_find(arrptr, 1) == 3);
+    array_clear(arrptr);
+}
+void test_find_not_exists()
+{
+    my_Array *arrptr = array_new(5);
+    array_append(arrptr, 12);
+    array_append(arrptr, 3);
+    array_append(arrptr, 21);
+    array_append(arrptr, 1);
+    array_append(arrptr, 22);
+    assert(array_find(arrptr, 2) == -1);
+    array_clear(arrptr);
+}

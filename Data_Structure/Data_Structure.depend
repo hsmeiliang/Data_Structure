@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1646370713 source:c:\users\j6xul\documents\data_structure\data_structure\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"array.h"
+
+1646380645 c:\users\j6xul\documents\data_structure\data_structure\array.h
+	<assert.h>
+	<stdbool.h>
+

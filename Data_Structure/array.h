@@ -73,7 +73,7 @@ void array_delete(my_Array *arrptr, int index);
 void array_remove_all(my_Array *arrptr, int value);
 
 // Returns the index of the first occurrence of the given value in the array.
-void array_find(my_Array *arrptr, int value);
+int array_find(my_Array *arrptr, int value);
 
 // Checks to see if given value is valid for memory, and exits if so
 void check_mem_address(void *p);
