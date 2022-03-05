@@ -31,6 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="link_list.cpp" />
+		<Unit filename="link_list.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="test.cpp" />
+		<Unit filename="test.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
