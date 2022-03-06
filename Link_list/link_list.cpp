@@ -45,7 +45,7 @@ bool list_empty(ForwardList *flist)
 void list_push_front(ForwardList *flist, int value)
 {
     struct SingleNode *head = flist->head;
-    struct SingleNode *node = malloc(sizeof(struct SingleNode));
+    struct SingleNode *node = (struct SingleNode *)malloc(sizeof(struct SingleNode));
     check_address(node);
 
     node->data = value;
@@ -54,7 +54,7 @@ void list_push_front(ForwardList *flist, int value)
 
     if(flist->tail == 0) //insert node is first node
     {
-        fliat->tail = node;
+        flist->tail = node;
     }
 }
 
@@ -70,7 +70,7 @@ void list_print_debug(ForwardList *flist)
         printf("%d -> ", current->data);
         current = current->next;
     }
-    print("\n\n");
+    printf("\n\n");
 }
 
 int list_front(ForwardList *flist)
@@ -112,7 +112,7 @@ void list_pop_front(ForwardList *flist)
 
 void list_append(ForwardList *flist, int value)
 {
-    struct SingleNode *node = malloc(sizeof(struct SingleNode));
+    struct SingleNode *node = (struct SingleNode *)malloc(sizeof(struct SingleNode));
     check_address(node);
 
     node->data = value;
@@ -165,7 +165,7 @@ void list_insert(ForwardList *flist, int index, int value)
 {
     struct SingleNode *current = flist->head;
     struct SingleNode *before = flist->head;
-    struct SingleNode *node = malloc(sizeof(struct SingleNode));
+    struct SingleNode *node = (struct SingleNode *)malloc(sizeof(struct SingleNode));
     check_address(node);
     node->data = value;
 
@@ -207,8 +207,8 @@ void list_insert(ForwardList *flist, int index, int value)
     }
     else
     {
-        node->next = last->next;
-        last->next = node;
+        node->next = before->next;
+        before->next = node;
     }
 }
 
@@ -220,7 +220,7 @@ int list_index(ForwardList *flist, int index)
     while(index > count && current != 0)
     {
         count++;
-        current = currnet->next;
+        current = current->next;
     }
 
     if(count < index || current == 0)
@@ -346,7 +346,7 @@ void check_address(void *p)
 {
     if(p == NULL)
     {
-        print("error mem\n");
+        printf("error mem\n");
         exit(EXIT_FAILURE);
     }
 }

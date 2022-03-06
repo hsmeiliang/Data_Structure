@@ -7,7 +7,6 @@ void run_all_tests();
 void test_size();
 void test_push_front();
 void test_empty();
-void test_empty();
 void test_front();
 void test_back();
 void test_pop_front();

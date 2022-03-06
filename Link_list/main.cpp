@@ -7,5 +7,7 @@
 
 int main()
 {
+    run_all_tests();
+    printf("all done\n");
     return 0;
 }

@@ -10,7 +10,7 @@ struct SingleNode{
     struct SingleNode *next;
 };
 
-typdef struct SLinkList
+typedef struct SLinkList
 {
     struct SingleNode *head;
     struct SingleNode *tail;

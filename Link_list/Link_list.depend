@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1646535915 source:c:\users\j6xul\documents\data_structure\link_list\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"link_list.h"
+	"test.h"
+
+1646535678 c:\users\j6xul\documents\data_structure\link_list\link_list.h
+	<stdbool.h>
+	<stdio.h>
+	<stdlib.h>
+
+1646535666 c:\users\j6xul\documents\data_structure\link_list\test.h
+	<assert.h>
+
+1646535894 source:c:\users\j6xul\documents\data_structure\link_list\test.cpp
+	"test.h"
+	"link_list.h"
+
+1646535778 source:c:\users\j6xul\documents\data_structure\link_list\link_list.cpp
+	"link_list.h"
+
